@@ -1,30 +1,39 @@
 ﻿# Windows 10 PoweShell ver. 1.0
+
 Clear-Host #cls
 [string] $scriptName = pwd
 $scriptName += "\"
 $scriptName += $MyInvocation.MyCommand.Name
 $host.UI.RawUI.WindowTitle = $scriptName
 
-$adresar_kam="C:\Users\DELL\Documents\zaloha\save_hry\warcraft_3\"
+#-------------------------- edit zona ------------------------------------
+$adresar_kde_je_hra = "C:\Program Files (x86)\Warcraft III\save" # adresar kde je hra
+$adresar_kam = "C:\Users\DELL\Documents\zaloha\save_hry\warcraft_3\" # kam se bude zalohovat
+#----------------------- konec edit zona ---------------------------------
+
 $exist = Test-Path -Path $adresar_kam
 #echo $exist
 if ( $exist -ilike "False" ){
 echo "chyby cilovy adresar pro zalohu  - $adresar_kam"
-Timeout /t 3
+# tady by moch este ten adesar udelat automaticky pokud chybi
+sleep 3
 Exit
 }
 
-$datum = "{0:dd_MM_yyyy-HH_mm_ss}" -f (Get-Date)
-$name="$datum-warcraft-3_save-backup.zip"
-echo $adresar_kam$name
+$datum = "{0:dd_MM_yyyy-HH_mm_ss}" -f (Get-Date) # datum ve tvaru den_mesic_rok_hodina_minuta_vterina
+$name="$datum-warcraft-3_save-backup.zip" # nazev souboru (archivu) zalohy
+echo $adresar_kam$name # plan cesta pro backup + filename
 
-$hvezdicka="*"
+$hvezdicka = "*" # hvezdicka, nahradni znak za jakykoliv nazev souboru
+# C:\Users\DELL\Documents\zaloha\save_hry\warcraft_3\*
+# vznikne tim toto ^^^^ tzn. vymaz vse v adrasari "C:\Users\DELL\Documents\zaloha\save_hry\warcraft_3\"
+
 echo "mazu stare zalohy $adresar_kam"
-Remove-Item -Path $adresar_kam$hvezdicka -Force
+Remove-Item -Path $adresar_kam$hvezdicka -Force # maze vse stary v ceste "C:\Users\DELL\Documents\zaloha\save_hry\warcraft_3\"
 sleep 2
 
-Compress-Archive -Path "C:\Program Files (x86)\Warcraft III\save" -CompressionLevel Optimal -DestinationPath "$adresar_kam$name"
-Start-Sleep -Seconds 3
+Compress-Archive -Path $adresar_kde_je_hra -CompressionLevel Optimal -DestinationPath $adresar_kam$name
+sleep 3
 
 # c:\Users\DELL\AppData\Local\VirtualStore\Program Files (x86)\Warcraft III\save\
 # nejky save data sjou pak jeste i tady ???
