@@ -21,10 +21,10 @@ Exit
 }
 
 $datum = "{0:dd_MM_yyyy-HH_mm_ss}" -f (Get-Date) # datum ve tvaru den_mesic_rok_hodina_minuta_vterina
-$name="$datum-warcraft-3_save-backup.zip" # nazev souboru (archivu) zalohy
+$name="$datum-warcraft-3_save-backup.zip" # nazev souboru (archivu) zalohy + prefix datum, popsani o radek visse
 echo $adresar_kam$name # plan cesta pro backup + filename
 
-$hvezdicka = "*" # hvezdicka, nahradni znak za jakykoliv nazev souboru
+$hvezdicka = "*" # hvezdicka, nahradni znak za jakykoliv nazev souboru (a vlastne i adresar, pouze soubor by byla maska *.* )
 # C:\Users\DELL\Documents\zaloha\save_hry\warcraft_3\*
 # vznikne tim toto ^^^^ tzn. vymaz vse v adrasari "C:\Users\DELL\Documents\zaloha\save_hry\warcraft_3\"
 
